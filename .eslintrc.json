@@ -37,6 +37,7 @@
     "template-curly-spacing": "error",
     "yield-star-spacing": "error",
     "react/jsx-filename-extension": 0,
+    "react/prop-types": 0,
     "import/no-extraneous-dependencies": ["error", {"devDependencies": true, "optionalDependencies": false, "peerDependencies": false}]
   }
 }

@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 process.noDeprecation = true;
 
@@ -12,8 +13,33 @@ module.exports = {
   devtool: 'cheap-module-eval-source-map',
   output: {
     path: path.resolve(__dirname, '../dist'),
-    filename: '[name].[chunkhash].js'
+    filename: '[name].bundle.js'
   },
+  resolve: {
+    modules: [
+      path.resolve(__dirname, '../src'),
+      path.resolve(__dirname, '../node_modules')
+    ]
+  },
+  plugins: [
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      filename: 'vendor.bundle.js',
+      minChunks: Infinity
+    }),
+    new ExtractTextPlugin({
+      filename: "[name].bundle.css",
+      allChunks: true
+    }),
+    new webpack.DefinePlugin({
+      'process.env': {
+        'NODE_ENV': JSON.stringify('production')
+      }
+    }),
+    new HtmlWebpackPlugin({
+      template: './index.html'
+    })
+  ],
   module: {
     rules: [
       {
@@ -23,21 +49,27 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: [ 
-          'style-loader',
-          {
-            loader: 'css-loader',
-            options: { importLoaders: 1}
-          },
-          {
-            loader: 'postcss-loader',
-            options: {
-              plugins: () => {
-                require('autoprefixer');
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                modules: true,
+                importLoaders: 1,
+                sourceMap: true
+              }
+            }, {
+              loader: 'postcss-loader',
+              options: {
+                plugins: () => {
+                  require('autoprefixer');
+                },
+                sourceMap: true
               }
             }
-          }
-        ]
+          ]
+        })
       },
       {
         test: /\.(png|jpe?g|gif|ico)$/,
@@ -87,16 +119,6 @@ module.exports = {
       }
     ]
   },
-  plugins: [
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
-      filename: 'vendor.[chunkhash].js',
-      minChunks: Infinity
-    }),
-    new HtmlWebpackPlugin({
-      template: './index.html'
-    })
-  ],
   devServer: {
     contentBase: path.resolve(__dirname, '../dist'),
     port: 10000,

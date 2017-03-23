@@ -4,25 +4,27 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 process.noDeprecation = true;
+const rootDir = path.resolve(__dirname, '../');
+const configDir = path.resolve(__dirname, '../config/config.dev.json');
 
 module.exports = {
-  context: path.resolve(__dirname, '../src'),
   entry: {
-    app: './index.js'
+    app: './src/index.js'
   },
   devtool: 'cheap-module-eval-source-map',
   output: {
-    path: path.resolve(__dirname, '../dist'),
-    filename: '[name].bundle.js'
+    path: path.resolve(rootDir, 'dist'),
+    filename: '[name].bundle.js',
+    sourceMapFilename: '[name].[chunkhash].map'
   },
   resolve: {
     modules: [
-      path.resolve(__dirname, '../src'),
-      path.resolve(__dirname, '../node_modules')
+      path.resolve(rootDir, 'src'),
+      path.resolve(rootDir, 'node_modules')
     ]
   },
   devServer: {
-    contentBase: path.resolve(__dirname, '../dist'),
+    contentBase: path.resolve(rootDir, 'dist'),
     historyApiFallback: true,
     port: 10000,
     host: '0.0.0.0',
@@ -43,9 +45,13 @@ module.exports = {
       allChunks: true
     }),
     new HtmlWebpackPlugin({
-      template: './index.html'
+      template: './src/index.html'
     })
   ],
+  externals: {
+    /* eslint-disable import/no-dynamic-require */
+    'Config': JSON.stringify(require(configDir))
+  },
   module: {
     rules: [
       {
@@ -107,7 +113,10 @@ module.exports = {
         test: /\.(png|jpe?g|gif|ico)$/,
         use: [{
           loader: 'url-loader',
-          options: { limit: 10000 }
+          options: { 
+            limit: 10000,
+            name: '[name].[ext]'
+          }
         }]
       }, {
         test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
@@ -115,7 +124,8 @@ module.exports = {
           loader: 'url-loader',
           options: {
             limit: 10000,
-            mimetype: 'application/font-woff'
+            mimetype: 'application/font-woff',
+            name: '[name].[ext]'
           }
         }]
       }, {
@@ -124,7 +134,8 @@ module.exports = {
           loader: 'url-loader',
           options: {
             limit: 10000,
-            mimetype: 'application/font-woff'
+            mimetype: 'application/font-woff',
+            name: '[name].[ext]'
           }
         }]
       }, {
@@ -133,21 +144,34 @@ module.exports = {
           loader: 'url-loader',
           options: {
             limit: 10000,
-            mimetype: 'application/octet-stream'
+            mimetype: 'application/octet-stream',
+            name: '[name].[ext]'
           }
         }]
-      }, {
+      }, 
+      {
         test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
         use: [{
           loader: 'url-loader',
           options: {
             limit: 10000,
-            mimetype: 'image/svg+xml'
+            mimetype: 'image/svg+xml',
+            name: '[name].[ext]'
           }
         }]
-      }, {
+      }, 
+      {
         test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
-        use: 'file-loader'
+        use: [{
+          loader: 'file-loader',
+          options: {
+            name: '[name].[ext]'
+          }
+        }]
+      },
+      {
+        test: /\.json$/,
+        use: 'json-loader'
       }
     ]
   }

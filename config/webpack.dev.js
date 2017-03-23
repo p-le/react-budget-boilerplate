@@ -61,16 +61,43 @@ module.exports = {
             {
               loader: 'css-loader',
               options: {
-                modules: true,
+                modules: false,
                 sourceMap: true,
                 importLoaders: 1
               }
             }, {
               loader: 'postcss-loader',
               options: {
-                plugins: () => {
-                  require('autoprefixer');
-                }
+                plugins: () => [
+                  require('postcss-import'),
+                  require('autoprefixer')
+                ]
+              }
+            }
+          ]
+        })
+      },
+      {
+        test: /\.module\.css$/,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                modules: true,
+                camelCase: true,
+                sourceMap: true,
+                importLoaders: 1,
+                localIdentName: '[name]__[local]___[hash:base64:5]'
+              }
+            }, {
+              loader: 'postcss-loader',
+              options: {
+                plugins: () => [
+                  require('postcss-import'),
+                  require('autoprefixer')
+                ]
               }
             }
           ]

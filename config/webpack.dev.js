@@ -90,7 +90,7 @@ module.exports = {
         })
       },
       {
-        test: /\.module\.css$/,
+        test: /\.m\.css$/,
         use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
           use: [

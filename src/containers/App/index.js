@@ -1,12 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
   BrowserRouter as Router,
   Route,
-  Redirect,
-  withRouter,
   Link
 } from 'react-router-dom';
 
+import "./fontawesome-color.css";
 import Child from '../../components/Child';
 
 const App = () => (
@@ -20,6 +19,9 @@ const App = () => (
         <li><Link to="/yahoo">Yahoo</Link></li>
         <li><Link to="/modus-create">Modus Create</Link></li>
       </ul>
+      <i className="fa fa-github fa-3x" aria-hidden="true" />
+      <i className="fa fa-facebook-official fa-3x" aria-hidden="true" />
+      <i className="fa fa-google fa-3x" aria-hidden="true" />
       <hr />
       <Route exact path="/" component={Home} />
       <Route path="/:id" component={Child} />

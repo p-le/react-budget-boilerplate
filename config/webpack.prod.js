@@ -12,7 +12,8 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, '../dist'),
-    filename: '[name].[chunkhash].js'
+    filename: '[name].[chunkhash].js',
+    sourceMapFilename: '[name].[chunkhash].map'
   },
   resolve: {
     modules: [
@@ -29,6 +30,26 @@ module.exports = {
     new ExtractTextPlugin({
       filename: "[name].[chunkhash].css",
       allChunks: true
+    }),
+    new webpack.DefinePlugin({
+      'process.env': {
+        'NODE_ENV': JSON.stringify('production')
+      }
+    }),
+    new webpack.LoaderOptionsPlugin({
+      minimize: true,
+      debug: false
+    }),
+    new webpack.optimize.UglifyJsPlugin({
+      beautify: false,
+      mangle: {
+        screw_ie8: true,
+        keep_fnames: true
+      },
+      compress: {
+        screw_ie8: true
+      },
+      comments: false
     }),
     new HtmlWebpackPlugin({
       template: './index.html'

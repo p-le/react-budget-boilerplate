@@ -21,6 +21,17 @@ module.exports = {
       path.resolve(__dirname, '../node_modules')
     ]
   },
+  devServer: {
+    contentBase: path.resolve(__dirname, '../dist'),
+    historyApiFallback: true,
+    port: 10000,
+    host: '0.0.0.0',
+    compress: true,
+    overlay: {
+      warnings: true,
+      errors: true
+    }
+  },
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
@@ -31,11 +42,6 @@ module.exports = {
       filename: "[name].bundle.css",
       allChunks: true
     }),
-    new webpack.DefinePlugin({
-      'process.env': {
-        'NODE_ENV': JSON.stringify('production')
-      }
-    }),
     new HtmlWebpackPlugin({
       template: './index.html'
     })
@@ -44,8 +50,8 @@ module.exports = {
     rules: [
       {
         test: /\.(js|jsx)$/,
-        exclude: [ /node_modules/ ],
-        use: 'babel-loader'
+        use: 'babel-loader',
+        exclude: [ /node_modules/ ]
       },
       {
         test: /\.css$/,
@@ -56,16 +62,15 @@ module.exports = {
               loader: 'css-loader',
               options: {
                 modules: true,
-                importLoaders: 1,
-                sourceMap: true
+                sourceMap: true,
+                importLoaders: 1
               }
             }, {
               loader: 'postcss-loader',
               options: {
                 plugins: () => {
                   require('autoprefixer');
-                },
-                sourceMap: true
+                }
               }
             }
           ]
@@ -118,15 +123,5 @@ module.exports = {
         use: 'file-loader'
       }
     ]
-  },
-  devServer: {
-    contentBase: path.resolve(__dirname, '../dist'),
-    port: 10000,
-    host: '0.0.0.0',
-    compress: true,
-    overlay: {
-      warnings: true,
-      errors: true
-    }
   }
 };

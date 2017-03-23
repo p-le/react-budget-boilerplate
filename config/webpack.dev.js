@@ -11,7 +11,7 @@ module.exports = {
   entry: {
     app: './src/index.js'
   },
-  devtool: 'cheap-module-eval-source-map',
+  devtool: 'cheap-module-source-map',
   output: {
     path: path.resolve(rootDir, 'dist'),
     filename: '[name].bundle.js',
@@ -54,6 +54,12 @@ module.exports = {
   },
   module: {
     rules: [
+      {
+        test: /\.(js|jsx)$/,
+        enforce: 'pre',
+        use: 'eslint-loader',
+        exclude: [ /node_modules/, /dist/ ]
+      },
       {
         test: /\.(js|jsx)$/,
         use: 'babel-loader',

@@ -38,6 +38,7 @@
     "yield-star-spacing": "error",
     "react/jsx-filename-extension": 0,
     "react/prop-types": 0,
-    "import/no-extraneous-dependencies": ["error", {"devDependencies": true, "optionalDependencies": true, "peerDependencies": true}]
+    "import/no-extraneous-dependencies": ["error", {"devDependencies": true, "optionalDependencies": true, "peerDependencies": true}],
+    "jsx-a11y/no-static-element-interactions": 0
   }
 }

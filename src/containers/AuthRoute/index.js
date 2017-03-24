@@ -1,16 +1,13 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import auth from '../../utils/auth';
 
-console.log(auth);
-const AuthRoute = ({ component, ...attrs }) => {
-  console.log(component);
-  console.log(...attrs);
-  return (<Route 
+const AuthRoute = ({ component, isAuthenticated, ...attrs }) => (
+  <Route 
     {...attrs} 
-    render={props => ( auth.isAuthenticated ? (
-      React.createComponent(component, props)
-    ) : (
+    render={props => ( isAuthenticated ? (
+      component={component}
+    ) : 
+    (
       <Redirect
         to={{
           pathname: '/login',
@@ -18,8 +15,8 @@ const AuthRoute = ({ component, ...attrs }) => {
         }} 
       />
     )
-  )} 
-  />);
-};
+    )} 
+  />
+);
 
 export default AuthRoute;

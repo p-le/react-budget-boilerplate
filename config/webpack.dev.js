@@ -11,7 +11,7 @@ module.exports = {
   entry: {
     app: './src/index.js'
   },
-  devtool: 'cheap-module-source-map',
+  devtool: 'cheap-module-eval-source-map',
   output: {
     path: path.resolve(rootDir, 'dist'),
     filename: '[name].bundle.js',

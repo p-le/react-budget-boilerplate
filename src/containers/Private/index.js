@@ -1,7 +1,7 @@
 import React from 'react';
 
-const Protected = () => (
+const Private = () => (
   <div>Protected</div>
 );
 
-export default Protected;
+export default Private;

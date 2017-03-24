@@ -20,16 +20,16 @@ class Login extends Component {
 
   handleOnClick() {
     const { updateEndpoint, getCode } = this.props;
-    const endpoint = `https://github.com/login/oauth/authorize`;
+    const endpoint = `https://github.com/login/oauth`;
     updateEndpoint(endpoint);
 
     const popup = window.open(
-      `${endpoint}?client_id=${Config.oauth.github.clientId}`,
+      `${endpoint}/authorize?client_id=${Config.oauth.github.clientId}`,
       '_blank',
       `${Popup.getFeatures()},${Popup.calcPos(1024, 768)}`);
 
       this.waitForCredentials(popup)
-        .then(credentials => getCode(credentials))
+        .then(credentials => getCode(credentials.split('=')[1]))
         .catch(err => console.log(err));
   }
 
@@ -50,7 +50,7 @@ class Login extends Component {
       } else {
         setTimeout(() => {
           this.waitForCredentials(popup)
-            .then(credentials => getCode(credentials))
+            .then(credentials => getCode(credentials.split('=')[1]))
             .catch(err => console.log(err));
         }, 50);
       }

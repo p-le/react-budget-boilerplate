@@ -8,10 +8,7 @@ import createHistory from 'history/createBrowserHistory';
 import { ConnectedRouter } from 'react-router-redux';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
-import 'font-awesome/css/font-awesome.css';
-import 'sanitize.css/sanitize.css';
-import "./public/fontawesome-color.css";
-import './public/favicon.ico';
+import './favicon.ico';
 
 import App from './containers/App';
 import configureStore from './store';

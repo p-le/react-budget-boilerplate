@@ -36,7 +36,10 @@ class App extends Component {
     return (
       <MuiThemeProvider>
         <div>
-          <AppBar title="React Budget Boilerplate" iconClassNameRight="muidocs-icon-navigation-expand-more" /> 
+          <AppBar 
+            title="React Budget Boilerplate" 
+            iconClassNameRight="muidocs-icon-navigation-expand-more" 
+          /> 
           <List>
             <ListItem primaryText="Public" containerElement={<Link to="/public" />} />
             <ListItem primaryText="Private" containerElement={<Link to="/private" />} />

@@ -16,8 +16,10 @@ function* fetchAccessToken(action) {
 
   yield put(updateAccessToken("aaabbbccc"));
   yield call((endpoint, code) => {
-    const url = `${endpoint}/access_token?client_id=${Config.oauth.github.clientId}&client_secret=${Config.oauth.github.clientSecret}&code=${code}`;
-    axios.post(url)
+    const url = `${Config.backend}/auth`;
+    axios.post(url, {
+      code
+    })
       .then(response => console.log(response))
       .catch(error => console.log(error));
 

@@ -1,13 +1,13 @@
 {
-  "name": "chat-frontend-wp2",
+  "name": "react-budget-boilerplate",
   "version": "1.0.0",
   "description": "React Webpack 2 Budget Boilerplate",
   "main": "index.js",
   "author": "p-le",
   "license": "MIT",
   "scripts": {
-    "build": "node_modules/.bin/webpack -p --config config/webpack.dev.js",
-    "dev": "node_modules/.bin/webpack-dev-server --config config/webpack.dev.js"
+    "build": "webpack -p --config config/webpack.dev.js",
+    "dev": "webpack-dev-server --config config/webpack.dev.js"
   },
   "devDependencies": {
     "autoprefixer": "^6.7.7",

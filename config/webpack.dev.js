@@ -73,30 +73,6 @@ module.exports = {
             {
               loader: 'css-loader',
               options: {
-                modules: false,
-                sourceMap: true,
-                importLoaders: 1
-              }
-            }, {
-              loader: 'postcss-loader',
-              options: {
-                plugins: () => [
-                  require('postcss-import'),
-                  require('autoprefixer')
-                ]
-              }
-            }
-          ]
-        })
-      },
-      {
-        test: /\.m\.css$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: [
-            {
-              loader: 'css-loader',
-              options: {
                 modules: true,
                 camelCase: true,
                 sourceMap: true,
